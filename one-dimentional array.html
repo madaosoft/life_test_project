@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>One-dimensional array</title>
+<style>
+table, td {
+    border: 1px solid black;
+}
+
+td {
+    padding: 5px;
+}
+</style>
+</head>
+<body>
+
+<h3>One-dimensional array</h3>
+Original:
+<table id="originalTable">
+  <tr>
+    <td></td>
+    <td></td>
+    <td></td>
+    <td></td>
+    <td></td>
+  </tr>
+  <!-- <tr>
+    <td>cell 3</td>
+    <td>cell 4</td>
+  </tr> -->
+</table>
+<br/>
+Modified:
+<table id="modifiedTable">
+  <tr>
+    <td></td>
+    <td></td>
+    <td></td>
+    <td></td>
+    <td></td>
+  </tr>
+</table>
+
+<p id="text">Click the button to remove the first row in the table.</p>
+
+<button onclick="sort()">Sort</button>
+<button onclick="updateTable(modifiedTable)">update table</button>
+
+<script>
+var originalTable = document.getElementById("originalTable");
+var modifiedTable = document.getElementById("modifiedTable");
+var rowSize = originalTable.rows.length;
+var columnSize = originalTable.rows[0].cells.length;
+
+document.getElementById("text").innerHTML = 
+"row: " + rowSize.toString() + " column: " + columnSize.toString();
+
+var array = [4,2,5,1,3];
+updateTable(originalTable);
+updateTable(modifiedTable);
+
+function sort() {
+    var rows = document.getElementById("originalTable").rows[0];
+    var temp = 0;
+    
+    for(var j = 0; j < 5; j++){
+        pivot = array[j];
+        for(var i = j+1; i < 5; i++){
+            if(array[j] > array[i]){
+                temp = array[i];
+                array[i] = array[j];
+                array[j] = temp;
+                
+                //alert(temp);
+                //alert(array[i]);
+                //alert(array[j]);
+                document.getElementById("text").innerHTML = array;
+            }
+        }
+    }
+}
+
+function updateTable(table) {
+    for(var i = 0; i < columnSize; i++){           
+        table.rows[0].cells[i].innerHTML = array[i];
+    }
+}
+</script>
+
+</body>
+</html>
