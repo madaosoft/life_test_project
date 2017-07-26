@@ -6,97 +6,36 @@
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 </head>
 <body>
+<!-- <h3>Game of life</h3> -->
 
-<!-- <h3>Multi-dimensional array</h3> -->
-<table id="board">
-  <tr>
-    <td></td>
-    <td></td>
-    <td></td>
-    <td></td>
-    <td></td>
-    <td></td>
-    <td></td>
-    <td></td>
-  </tr>
-  <tr>
-    <td></td>
-    <td></td>
-    <td></td>
-    <td></td>
-    <td></td>
-    <td></td>
-    <td></td>
-    <td></td>
-  </tr>
-  <tr>
-    <td></td>
-    <td></td>
-    <td></td>
-    <td></td>
-    <td></td>
-    <td></td>
-    <td></td>
-    <td></td>
-  </tr>
-  <tr>
-    <td></td>
-    <td></td>
-    <td></td>
-    <td></td>
-    <td></td>
-    <td></td>
-    <td></td>
-    <td></td>
-  </tr>
-  <tr>
-    <td></td>
-    <td></td>
-    <td></td>
-    <td></td>
-    <td></td>
-    <td></td>
-    <td></td>
-    <td></td>
-  </tr>
-  <tr>
-    <td></td>
-    <td></td>
-    <td></td>
-    <td></td>
-    <td></td>
-    <td></td>
-    <td></td>
-    <td></td>
-  </tr>
-  <tr>
-    <td></td>
-    <td></td>
-    <td></td>
-    <td></td>
-    <td></td>
-    <td></td>
-    <td></td>
-    <td></td>
-  </tr>
-  <tr>
-    <td></td>
-    <td></td>
-    <td></td>
-    <td></td>
-    <td></td>
-    <td></td>
-    <td></td>
-    <td></td>
-  </tr>
-</table>
-
-<p id="generation">0</p>
+<p id="board"></p>
+<p id="generation"></p>
 <p id="hp"></p>
 
 <button onclick="run()" id="run">Run</button>
 <!-- <button onclick="pauseSimulation()" style="visibility: visible;" id="pause">Pause</button> -->
 <button onclick="clearBoard()" style="visibility: visible;" id="clear">Clear</button>
+<form>
+    <br />Table row/column size (between 10 and 20):<br />
+    <input id="tableRowSize" type="number" name="quantity" value="10" min="10" max="20">
+    <input id="tableColumnSize" type="number" name="quantity" value="10" min="10" max="20">
+    <input type="button" value="Create" 
+    onclick="createTable($('#tableRowSize').val(), $('#tableColumnSize').val(), '#board')">
+</form>
+
+<form>
+<br />Select initial pattern:<br />
+Default: 
+<input type="radio" name="pattern" value="none" checked>None<br />
+Still lifes: 
+<input type="radio" name="pattern" value="block">Block
+<input type="radio" name="pattern" value="beehive"> Beehive
+<input type="radio" name="pattern" value="loaf"> Loaf<br />
+Oscillators: 
+<input type="radio" name="pattern" value="blinker">Blinker
+<input type="radio" name="pattern" value="toad"> Toad
+<input type="radio" name="pattern" value="ccc"> ccc
+</form>
 
 <script src="life.js"></script>
 </body>

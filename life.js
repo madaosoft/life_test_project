@@ -1,33 +1,29 @@
-var board = document.getElementById("board");
-var rowSize = board.rows.length;
-var columnSize = board.rows[0].cells.length;
+// var board = document.getElementById("board");
+var rowSize = 0; //board.rows.length;
+var columnSize = 0; //board.rows[0].cells.length;
 var generation = 0;
 var running = false;
-                  
-var arrayCurrent = [[0,0,1,0,0,0,0,0],
-                    [1,0,1,0,0,0,0,0],
-                    [0,1,1,0,0,0,0,0],
-                    [0,0,0,0,0,0,0,0],
-                    [0,0,0,0,0,0,0,0],
-                    [0,0,0,0,0,0,0,0],
-                    [0,0,0,0,0,0,0,0],
-                    [0,0,0,0,0,0,0,0]];
+var arrayCurrent;
+var arrayNew;
              
-var arrayNew = [[1,1,0,0,1,0,0,0],
-                [1,1,0,0,1,0,0,0],
-                [0,0,0,0,1,0,0,0],
-                [0,0,0,0,0,0,0,0],
-                [0,0,0,0,0,0,0,0],
-                [0,0,0,0,0,0,0,0],
-                [0,0,0,0,0,0,0,0],
-                [0,0,0,0,0,0,0,0]];
-             
-updateTable(board, arrayCurrent);
-
-$("td").click(function(e){
-    // getId(this);
-    toggleState(arrayCurrent, this.parentNode.rowIndex, this.cellIndex);
-});
+var patterns = {none:"none",
+                block:[[1,1],
+                       [1,1]],
+                beehive:[[0,1,1,0],
+                         [1,0,0,1],
+                         [0,1,1,0]],
+                loaf:[[0,1,1,0],
+                      [1,0,0,1],
+                      [0,1,0,1],
+                      [0,0,1,0]],
+                blinker:[[0,1,0],
+                         [0,1,0],
+                         [0,1,0]],
+                toad:[[0,0,1,0],
+                      [1,0,0,1],
+                      [1,0,0,1],
+                      [0,1,0,0]],
+                beacon:}
 
 // var isDragging = false;
 // $("td")
@@ -43,12 +39,6 @@ $("td").click(function(e){
     // isDragging = false;
 // });
 
-$("body").keydown(function (event){
-    if(event.which){
-        run();
-    }
-});
-
 function getId(element) {
     alert("row" + element.parentNode.rowIndex + 
     " - column" + element.cellIndex);
@@ -59,7 +49,7 @@ function toggleState(array, row, column){
         array[row][column] = 0;
     else
         array[row][column] = 1
-    updateTable(board, array);
+    updateTable($('#board')[0].firstChild, array);
 }
 
 function clearBoard(){
@@ -68,9 +58,13 @@ function clearBoard(){
             arrayCurrent[i][j] = 0;
         }
     }
-    generation = 0;
-    document.getElementById("generation").innerHTML = 0;
-    updateTable(board, arrayCurrent);
+    setGeneration(0);
+    updateTable($('#board')[0].firstChild, arrayCurrent);
+}
+
+function setGeneration(g){
+    generation = g;
+    document.getElementById("generation").innerHTML = "generation: " + g;
 }
 
 function createArray(){
@@ -108,13 +102,13 @@ function run(){
             }
         }
     }
-    updateTable(board, arrayNew);
+    updateTable($('#board')[0].firstChild, arrayNew);
     for(var i = 0; i < rowSize; i++){           
         for(var j = 0; j < columnSize; j++){
             arrayCurrent[i][j] = arrayNew[i][j];
         }
     }
-    document.getElementById("generation").innerHTML = ++generation;
+    setGeneration(++generation);
 }
 
 function sumNeighbours(array, x, y){
@@ -160,3 +154,78 @@ function updateTable(table, array){
         }
     }
 }
+
+function createTable(row, column, id){
+    rowSize = row;
+    columnSize = column;
+    arrayCurrent = setPattern();
+    arrayNew = createArray();
+    var table = document.createElement('table');
+    
+    for (var i = 0; i < row; i++){
+        var tr = document.createElement('tr');   
+        for (var j = 0; j < column; j++){
+            var td = document.createElement('td');
+            // var txt = document.createTextNode('txt');
+
+            // td.appendChild(txt);
+            tr.appendChild(td);
+            table.appendChild(tr);
+        }
+    }
+    // document.body.appendChild(table);
+    $(id).empty();
+    $(id).append(table);
+    
+    $("td").click(function(e){
+        // getId(this);
+        toggleState(arrayCurrent, this.parentNode.rowIndex, this.cellIndex);
+        setGeneration(0);
+    });
+    
+    setGeneration(0);
+    updateTable($('#board')[0].firstChild, arrayCurrent);
+}
+
+function setPattern(){
+    var p = [];
+    var row = 0;
+    var column = 0;
+    var id = "";
+    
+    // switch($("input[name=pattern]:checked").val()){
+        // case "none":
+            // break;
+        // case "1":
+            // p = patterns.block;
+            // break;            
+    // }
+    
+    // console.log($("input[name=pattern]:checked").val());
+    p = patterns[$("input[name=pattern]:checked").val()];
+    
+    if(p != "none"){
+        row = p.length;
+        column = p[0].length; 
+    }
+    
+    // console.log("row: " + row + " column: " + column);
+    
+    arrayCurrent = createArray();
+    for(var i = 0; i < row; i++){           
+        for(var j = 0; j < column; j++){
+            arrayCurrent[i+1][j+1] = p[i][j];
+        }
+    }
+    return arrayCurrent;
+}
+
+function main(){
+    $("body").keydown(function (event){
+        if(event.which == 78){ // 'n' key
+            run();
+        }
+    });
+    console.log($("input[name=pattern]:checked").val());
+}
+main();
