@@ -1,0 +1,19 @@
+table {
+    border-collapse: collapse;
+}
+table, td {
+    border: 1px solid black;
+}
+
+td {
+    width: 25px;
+    height: 25px;
+    text-align: center;
+}
+
+.array {
+    padding: 15px;
+    text-align: center;
+}
+
+
