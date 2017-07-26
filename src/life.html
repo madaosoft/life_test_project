@@ -12,19 +12,22 @@
 <p id="generation"></p>
 <p id="txt"></p>
 
-<button onclick="run()" id="run">Run</button>
+<button onclick="g.startAnimation(g)" id="start">Animate</button>
+<button onclick="g.stopAnimation()" id="stop">Stop</button>
+<button onclick="g.run()" id="run">Run</button>
 <!-- <button onclick="pauseSimulation()" style="visibility: visible;" id="pause">Pause</button> -->
-<button onclick="clearBoard()" style="visibility: visible;" id="clear">Clear</button>
+<button onclick="g.clearBoard()" style="visibility: visible;" id="clear">Clear</button>
 <form>
-    <br />Table row/column size (between 10 and 20):<br />
-    <input id="tableRowSize" type="number" name="quantity" value="10" min="10" max="20">
-    <input id="tableColumnSize" type="number" name="quantity" value="20" min="10" max="20">
+    <br />Table row/column size (between 10 and 100):<br />
+    <input id="tableRowSize" type="number" name="quantity" value="30" min="10" max="100">
+    <input id="tableColumnSize" type="number" name="quantity" value="30" min="10" max="100">
     <input type="button" value="Create"
-    onclick="createTable($('#tableRowSize').val(), $('#tableColumnSize').val(), '#board')">
+    onclick="g.createTable(g, $('#tableRowSize').val(), $('#tableColumnSize').val(), '#board')">
 </form>
 
 <form>
-<br />Select initial pattern:<br />
+<br />Select pattern:<br />
+<input type="checkbox" id="usePattern" checked>Use pattern paste<br />
 Default:
 <input type="radio" name="pattern" value="none" >None<br />
 Still lifes:
