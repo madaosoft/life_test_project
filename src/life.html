@@ -10,7 +10,7 @@
 
 <p id="board"></p>
 <p id="generation"></p>
-<p id="hp"></p>
+<p id="txt"></p>
 
 <button onclick="run()" id="run">Run</button>
 <!-- <button onclick="pauseSimulation()" style="visibility: visible;" id="pause">Pause</button> -->
@@ -18,23 +18,26 @@
 <form>
     <br />Table row/column size (between 10 and 20):<br />
     <input id="tableRowSize" type="number" name="quantity" value="10" min="10" max="20">
-    <input id="tableColumnSize" type="number" name="quantity" value="10" min="10" max="20">
-    <input type="button" value="Create" 
+    <input id="tableColumnSize" type="number" name="quantity" value="20" min="10" max="20">
+    <input type="button" value="Create"
     onclick="createTable($('#tableRowSize').val(), $('#tableColumnSize').val(), '#board')">
 </form>
 
 <form>
 <br />Select initial pattern:<br />
-Default: 
-<input type="radio" name="pattern" value="none" checked>None<br />
-Still lifes: 
+Default:
+<input type="radio" name="pattern" value="none" >None<br />
+Still lifes:
 <input type="radio" name="pattern" value="block">Block
 <input type="radio" name="pattern" value="beehive"> Beehive
 <input type="radio" name="pattern" value="loaf"> Loaf<br />
-Oscillators: 
-<input type="radio" name="pattern" value="blinker">Blinker
+Oscillators:
+<input type="radio" name="pattern" value="blinker" checked>Blinker
 <input type="radio" name="pattern" value="toad"> Toad
-<input type="radio" name="pattern" value="ccc"> ccc
+<input type="radio" name="pattern" value="beacon"> Beacon<br />
+Spaceships:
+<input type="radio" name="pattern" value="glider">Glider
+<input type="radio" name="pattern" value="lwss"> Lightweight spaceship (LWSS)
 </form>
 
 <script src="life.js"></script>
